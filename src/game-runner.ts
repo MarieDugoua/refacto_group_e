@@ -10,12 +10,16 @@ export class GameRunner {
         let notAWinner;
         do {
 
-            game.roll(Math.floor(Math.random() * 6) + 1);
-        
-            if (Math.floor(Math.random() * 10) == 7) {
-            notAWinner = game.wrongAnswer();
-            } else {
-            notAWinner = game.wasCorrectlyAnswered();
+            try {
+                game.roll(Math.floor(Math.random() * 6) + 1);
+
+                if (Math.floor(Math.random() * 10) == 7) {
+                    notAWinner = game.wrongAnswer();
+                } else {
+                    notAWinner = game.wasCorrectlyAnswered();
+                }
+            } catch (e) {
+                console.log(e)
             }
         
         } while (notAWinner);
@@ -24,4 +28,3 @@ export class GameRunner {
 
 GameRunner.main();
 
-  
