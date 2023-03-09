@@ -174,4 +174,14 @@ export class Game {
           }
     }
 
+    public quit(): void {
+        console.log(`${this.players[this.currentPlayer]} leaves the game`)
+        this.players.splice(this.currentPlayer, 1)
+    }
+
+    public getPlayers(): string[]
+    {
+        return this.players
+    }
+
 }
