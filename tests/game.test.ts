@@ -2,18 +2,17 @@ import { expect, assert } from 'chai';
 import { describe, it } from 'mocha';
 import { GameRunner } from '../src/game-runner';
 import { Game } from "../src/game";
+import {NotEnoughPlayerError} from "../src/errors/NotEnoughPlayerError";
 import {ConsoleSpy} from "../src/ConsoleSpy";
+import {TooManyPlayerError} from "../src/errors/TooManyPlayerError";
 
 describe('The test environment', () => {
-    it('should pass', () => {
-        expect(true).to.be.true;
-    });
 
     it("should access game", function () {
         expect(GameRunner).to.not.be.undefined;
     });
 
-    it("should not have less then 2 players to play the game", () => {
+    it("should not have less than 2 players to play the game", () => {
         const consoleSpy = new ConsoleSpy();
         const game = new Game(consoleSpy);
 
@@ -28,7 +27,7 @@ describe('The test environment', () => {
         expect(() => game.roll(5)).not.to.throw(Error)
     })
 
-    it("should not have less then 2 players to play the game", () => {
+    it("should not have more than 6 players to play the game", () => {
         const consoleSpy = new ConsoleSpy();
         const game = new Game(consoleSpy);
 
@@ -54,7 +53,7 @@ describe('The test environment', () => {
 
         game.roll(4)
 
-        game.quit()
+        game.makeThePlayerQuit()
 
         assert.notInclude(game.getPlayers(), players[0])
         assert.include(game.getPlayers(), players[1])
@@ -71,7 +70,7 @@ describe('The test environment', () => {
         game.roll(4)
         game.wasCorrectlyAnswered()
         game.roll(2)
-        game.quit()
+        game.makeThePlayerQuit()
 
         assert.include(game.getPlayers(), players[0])
         assert.notInclude(game.getPlayers(), players[1])

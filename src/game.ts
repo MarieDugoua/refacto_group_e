@@ -1,5 +1,6 @@
-import NotEnoughtPlayerError from "./NotEnoughtPlayerError";
+import {NotEnoughPlayerError} from "./errors/NotEnoughPlayerError";
 import {IConsole} from "./IConsole";
+import {TooManyPlayerError} from "./errors/TooManyPlayerError";
 
 export class Game {
 
@@ -49,9 +50,7 @@ export class Game {
     }
 
     public roll(roll: number) {
-        if (this.howManyPlayers() < 2 || this.howManyPlayers() > 6) {
-            throw new Error('NotEnoughtPlayerError')
-        }
+        this.checkGameHadGoodPlayersNumber();
 
         this.iConsole.log(this.players[this.currentPlayer] + " is the current player");
         this.iConsole.log("They have rolled a " + roll);
@@ -85,6 +84,13 @@ export class Game {
           this.iConsole.log("The category is " + this.currentCategory());
           this.askQuestion();
         }
+    }
+
+    private checkGameHadGoodPlayersNumber() {
+        if (this.howManyPlayers() < 2) {
+            throw new NotEnoughPlayerError();
+        }else if(this.howManyPlayers() > 6)
+            throw new TooManyPlayerError();
     }
 
     private askQuestion(): void {
@@ -175,7 +181,7 @@ export class Game {
           }
     }
 
-    public quit(): void {
+    public makeThePlayerQuit(): void {
         this.iConsole.log(`${this.players[this.currentPlayer]} leaves the game`)
         this.players.splice(this.currentPlayer, 1)
     }
