@@ -76,4 +76,33 @@ describe('The test environment', () => {
         assert.notInclude(game.getPlayers(), players[1])
         assert.include(game.getPlayers(), players[2])
     });
+
+    it('player should leave prison', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(4)
+        game.wrongAnswer()
+
+        expect(game.getIsGettingOutOfPenaltyBox()).to.equals(false)
+        expect(game.getInPenaltyBox()[0]).to.equals(true)
+
+        game.roll(4)
+        game.wasCorrectlyAnswered()
+        expect(game.getIsGettingOutOfPenaltyBox()).to.equals(false)
+        expect(game.getInPenaltyBox()[1]).to.equals(false)
+
+        game.roll(4)
+        game.wasCorrectlyAnswered()
+        expect(game.getIsGettingOutOfPenaltyBox()).to.equals(false)
+        expect(game.getInPenaltyBox()[2]).to.equals(false)
+
+        game.roll(5)
+
+        expect(game.getIsGettingOutOfPenaltyBox()).to.equals(true)
+        expect(game.getInPenaltyBox()[0]).to.equals(false)
+    });
 });
