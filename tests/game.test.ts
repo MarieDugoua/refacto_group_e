@@ -61,4 +61,21 @@ describe('The test environment', () => {
         assert.include(game.getPlayers(), players[1])
         assert.include(game.getPlayers(), players[2])
     });
+
+    it('second player should leave a game', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(4)
+        game.wasCorrectlyAnswered()
+        game.roll(2)
+        game.quit()
+
+        assert.include(game.getPlayers(), players[0])
+        assert.notInclude(game.getPlayers(), players[1])
+        assert.include(game.getPlayers(), players[2])
+    });
 });
