@@ -59,6 +59,7 @@ export class Game {
         if (this.inPenaltyBox[this.currentPlayer]) {
           if (roll % 2 != 0) {
             this.isGettingOutOfPenaltyBox = true;
+            this.inPenaltyBox[this.currentPlayer] = false
     
             this.iConsole.log(this.players[this.currentPlayer] + " is getting out of the penalty box");
             this.places[this.currentPlayer] = this.places[this.currentPlayer] + roll;
@@ -175,7 +176,7 @@ export class Game {
     }
 
     public quit(): void {
-        console.log(`${this.players[this.currentPlayer]} leaves the game`)
+        this.iConsole.log(`${this.players[this.currentPlayer]} leaves the game`)
         this.players.splice(this.currentPlayer, 1)
     }
 
@@ -184,4 +185,13 @@ export class Game {
         return this.players
     }
 
+    public getInPenaltyBox(): boolean[]
+    {
+        return this.inPenaltyBox
+    }
+
+    public getIsGettingOutOfPenaltyBox(): boolean
+    {
+        return this.isGettingOutOfPenaltyBox
+    }
 }
