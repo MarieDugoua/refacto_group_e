@@ -29,6 +29,7 @@
   "author": "Felix Blechschmitt",
   "license": "GPL-3.0",
   "dependencies": {
+    "mocha": "^10.2.0",
     "typescript": "^2.9.2"
   },
   "devDependencies": {
