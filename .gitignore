@@ -231,3 +231,5 @@ Temporary Items
 # Local
 .env
 dist
+
+/.nyc_output
