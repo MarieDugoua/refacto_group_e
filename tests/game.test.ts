@@ -3,6 +3,7 @@ import { describe, it } from 'mocha';
 import { GameRunner } from '../src/game-runner';
 import { Game } from "../src/game";
 import NotEnoughtPlayerError from "../src/NotEnoughtPlayerError";
+import {ConsoleSpy} from "../src/ConsoleSpy";
 
 describe('The test environment', () => {
     it('should pass', () => {
@@ -14,7 +15,8 @@ describe('The test environment', () => {
     });
 
     it("should not have less then 2 players to play the game", () => {
-        const game = new Game()
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
 
         expect(() => game.roll(5)).to.throw(Error)
 
@@ -28,7 +30,8 @@ describe('The test environment', () => {
     })
 
     it("should not have less then 2 players to play the game", () => {
-        const game = new Game()
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
 
         game.add('Pet')
         game.add('Ed')
@@ -44,7 +47,8 @@ describe('The test environment', () => {
     })
 
     it('player should leave a game', () => {
-        const game = new Game();
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
         const players: string[] = ['Pet', 'Ed', 'Chat']
 
         players.forEach((player) => game.add(player))
