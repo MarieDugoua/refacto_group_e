@@ -1,11 +1,13 @@
 import {expect} from 'chai';
-import {describe, it} from 'mocha';
+import {describe, it, before} from 'mocha';
 import {ConsoleSpy} from "../src/ConsoleSpy";
 import {Game} from "../src/game";
 import {readFileSync, writeFileSync} from "fs";
 import {RandomSpy} from "../src/RandomSpy";
 
 describe('The Golden Master', () => {
+    let consoleSpy: ConsoleSpy;
+    let game: Game;
 
     const data =
         [
@@ -15,15 +17,16 @@ describe('The Golden Master', () => {
             ["Billy", "Villy", "Killy", "Milly", "Rilly", "Zilly", "Lilly"],
         ];
 
+    before(() => {
+        consoleSpy = new ConsoleSpy();
+        game = new Game(consoleSpy);
+    });
+
     describe("write master", () => {
         data.forEach(
             players => {
                 it("write with " + players.length + " player", () => {
-                    const consoleSpy = new ConsoleSpy();
-                    const game = new Game(consoleSpy);
-
                     play(game, players);
-
                     writeFileSync("tests/goldenMaster/testWith" + players.length + "Players.txt", consoleSpy.content);
                 });
             }
@@ -35,8 +38,6 @@ describe('The Golden Master', () => {
         data.forEach(
             players => {
                 it("with " + players.length + " players", () => {
-                    const consoleSpy = new ConsoleSpy();
-                    const game = new Game(consoleSpy);
                     const expectedContent = readFileSync("tests/goldenMaster/testWith" + players.length + "Players.txt", "utf8");
 
                     play(game, players);
