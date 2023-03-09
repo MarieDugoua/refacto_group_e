@@ -11,7 +11,7 @@ describe('The Golden Master', () => {
 
     const data =
         [
-            //          ["Billy"],
+            ["Billy"],
             ["Billy", "Villy"],
             ["Billy", "Villy", "Killy"],
             ["Billy", "Villy", "Killy", "Milly", "Rilly", "Zilly", "Lilly"],
@@ -26,7 +26,7 @@ describe('The Golden Master', () => {
         data.forEach(
             players => {
                 it("write with " + players.length + " player", () => {
-                    play(game, players);
+                    play(game, players, consoleSpy);
                     writeFileSync("tests/goldenMaster/testWith" + players.length + "Players.txt", consoleSpy.content);
                 });
             }
@@ -40,7 +40,7 @@ describe('The Golden Master', () => {
                 it("with " + players.length + " players", () => {
                     const expectedContent = readFileSync("tests/goldenMaster/testWith" + players.length + "Players.txt", "utf8");
 
-                    play(game, players);
+                    play(game, players,consoleSpy);
 
                     const actualContent = consoleSpy.content;
                     expect(actualContent).equals(expectedContent);
@@ -51,21 +51,28 @@ describe('The Golden Master', () => {
     })
 });
 
-const play = (game: Game, players: string[]) => {
+const play = (game: Game, players: string[], consoleSpy:ConsoleSpy) => {
     players.forEach(player => game.add(player));
     const randomGen = new RandomSpy();
 
 
     let notAWinner;
-    do {
 
-        game.roll(Math.floor(randomGen.random() * 6) + 1);
+    try{
+        do {
+            game.roll(Math.floor(randomGen.random() * 6) + 1);
 
-        if (Math.floor(randomGen.random() * 10) == 7) {
-            notAWinner = game.wrongAnswer();
-        } else {
-            notAWinner = game.wasCorrectlyAnswered();
-        }
+            if (Math.floor(randomGen.random() * 10) == 7) {
+                notAWinner = game.wrongAnswer();
+            } else {
+                notAWinner = game.wasCorrectlyAnswered();
+            }
 
-    } while (notAWinner);
+        } while (notAWinner);
+    }
+    catch (exception)
+    {
+     consoleSpy.content+=exception;
+    }
+
 }
