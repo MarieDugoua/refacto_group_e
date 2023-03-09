@@ -1,8 +1,10 @@
 import {Game} from './game';
+import {ConsoleSpy} from "./ConsoleSpy";
 
 export class GameRunner {
     public static main(): void {
-        const game = new Game();
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
         game.add("Chet");
         game.add("Pat");
         game.add("Sue");
