@@ -1,3 +1,5 @@
+import NotEnoughtPlayerError from "./NotEnoughtPlayerError";
+
 export class Game {
 
     private players: Array<string> = [];
@@ -43,6 +45,10 @@ export class Game {
     }
 
     public roll(roll: number) {
+        if (this.howManyPlayers() < 2 || this.howManyPlayers() > 6) {
+            throw new Error('NotEnoughtPlayerError')
+        }
+
         console.log(this.players[this.currentPlayer] + " is the current player");
         console.log("They have rolled a " + roll);
     
