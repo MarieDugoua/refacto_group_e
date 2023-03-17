@@ -105,4 +105,31 @@ describe('The test environment', () => {
         expect(game.getIsGettingOutOfPenaltyBox()).to.equals(true)
         expect(game.getInPenaltyBox()[0]).to.equals(false)
     });
+
+    it('if techno mode is activated should ask techno questions', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+        game.activateTechnoQuestions()
+
+        game.roll(3)
+        game.wasCorrectlyAnswered()
+
+        expect(consoleSpy.content).to.include("Techno");
+    });
+
+    it('if techno mode is not activated should ask rock questions', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(3)
+        game.wasCorrectlyAnswered()
+
+        expect(consoleSpy.content).to.include("Rock");
+    });
 });
