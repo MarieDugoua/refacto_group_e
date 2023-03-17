@@ -99,21 +99,33 @@ export class Game {
     }
 
     public askQuestion(): void {
+        let question: string;
+
         if (this.currentCategory() == 'Pop')
-            this.iConsole.log(this.popQuestions.shift());
-            this.popQuestions.push(`Pop Question: `)
+            question = this.popQuestions.shift()
+
+            this.iConsole.log(question);
+            this.popQuestions.push(question)
         if (this.currentCategory() == 'Science')
-            this.iConsole.log(this.scienceQuestions.shift());
-            this.scienceQuestions.push(`Science Question: `)
+            question = this.scienceQuestions.shift()
+
+            this.iConsole.log(question);
+            this.scienceQuestions.push(question)
         if (this.currentCategory() == 'Sports')
-            this.iConsole.log(this.sportsQuestions.shift());
-            this.sportsQuestions.push(`Sports Question: `)
+            question = this.sportsQuestions.shift()
+
+            this.iConsole.log(question);
+            this.sportsQuestions.push(question)
         if (this.currentCategory() == 'Rock')
-            this.iConsole.log(this.rockQuestions.shift());
-            this.rockQuestions.push(`Rock Question: `)
+            question = this.rockQuestions.shift()
+
+            this.iConsole.log(question);
+            this.rockQuestions.push(question)
         if(this.currentCategory() == 'Techno')
-            this.iConsole.log(this.technoQuestions.shift());
-            this.technoQuestions.push(`Techno Question: `)
+            question = this.technoQuestions.shift()
+
+            this.iConsole.log(question);
+            this.technoQuestions.push(question)
     }
 
     private currentCategory(): string {
