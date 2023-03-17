@@ -211,35 +211,67 @@ describe('The test environment', () => {
         expect(consoleSpy.content).to.include("Rock");
     });
 
-    it("should earn 3 Gold Points", () => {
-        // Arrange
-        const roll = 2;
-        const consoleSpy = new ConsoleSpy();
-        const game = new Game(consoleSpy);
+    describe('When giving X correct answers in a row, the player earns X Gold Points instead of 1', () => {
+        it("should earn 3 Gold Points", () => {
+            const roll = 2;
+            const consoleSpy = new ConsoleSpy();
+            const game = new Game(consoleSpy);
 
-        const players: string[] = ['Pet', 'Ed', 'Chat']
+            const expectedCoins = 3;
 
-        players.forEach((player) => game.add(player))
-        const purses = game.purses
+            const players: string[] = ['Pet', 'Ed']
 
-        game.roll(roll);
+            players.forEach((player) => game.add(player))
 
-        const correctAnswers = [
-            { category: "Pop", answer: "Pop Answer 1" },
-            { category: "Pop", answer: "Pop Answer 2" },
-            { category: "Pop", answer: "Pop Answer 3" },
-        ];
-
-        correctAnswers.forEach((answer) => {
-            game.wasCorrectlyAnswered();
             game.roll(roll);
+
+            const correctAnswers = [
+                { category: "Pop", answer: "Pop Answer 1" },
+                { category: "Pop", answer: "Pop Answer 2" },
+                { category: "Pop", answer: "Pop Answer 3" },
+            ];
+
+            for (let i = 0; i < correctAnswers.length; i++) {
+                game.wasCorrectlyAnswered();
+                game.roll(roll);
+            };
+
+            game.wasCorrectlyAnswered();
+
+            expect(consoleSpy.content).to.contain(`Pet now has ${expectedCoins} Gold Coins.`);
         });
 
-        game.wasCorrectlyAnswered();
+        it("should earn 4 Gold Points", () => {
+            const roll = 2;
+            const consoleSpy = new ConsoleSpy();
+            const game = new Game(consoleSpy);
 
-        expect(game.purses[0]).to.be.equals(3);
-        expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`);
+            const expectedCoins = 4;
+
+            const players: string[] = ['Pet', 'Ed']
+
+            players.forEach((player) => game.add(player))
+
+            game.roll(roll);
+
+            const correctAnswers = [
+                { category: "Pop", answer: "Pop Answer 1" },
+                { category: "Pop", answer: "Pop Answer 2" },
+                { category: "Pop", answer: "Pop Answer 3" },
+                { category: "Pop", answer: "Pop Answer 4" },
+            ];
+
+            for (let i = 0; i < correctAnswers.length; i++) {
+                game.wasCorrectlyAnswered();
+                game.roll(roll);
+            };
+
+            game.wasCorrectlyAnswered();
+
+            expect(consoleSpy.content).to.contain(`Pet now has ${expectedCoins} Gold Coins.`);
+        });
     });
+
 
     it('question distribution should be fair', () => {
         const consoleSpy = new ConsoleSpy();
