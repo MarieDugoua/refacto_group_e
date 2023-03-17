@@ -1,6 +1,6 @@
-import {NotEnoughPlayerError} from "./errors/NotEnoughPlayerError";
 import {IConsole} from "./IConsole";
 import {TooManyPlayerError} from "./errors/TooManyPlayerError";
+import {NotEnoughPlayerError} from "./errors/NotEnoughPlayerError";
 
 export class Game {
 
