@@ -124,8 +124,7 @@ describe('The test environment', () => {
         game.roll(4)
         game.useJokerCard()
 
-        expect(consoleSpy.content).to.contain('Pet use a Joker')
-        expect(consoleSpy.content).to.contain('Answer was correct!!!!')
+        expect(consoleSpy.content).to.contain('Pet use a Joker\nAnswer was correct!!!!') //concat both
     });
 
     it('should give no gold when player use joker card', function () {
@@ -140,6 +139,7 @@ describe('The test environment', () => {
         game.useJokerCard()
 
         expect(game.purses[0]).to.be.equals(0);
+        expect(consoleSpy.content).to.contain('Pet use a Joker\nAnswer was correct!!!!')
         expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
     });
 
@@ -153,12 +153,12 @@ describe('The test environment', () => {
         game.roll(4)
         game.useJokerCard()
 
-        expect(consoleSpy.content).to.contain('Pet use a Joker')
+        expect(consoleSpy.content).to.contain('Pet use a Joker\nAnswer was correct!!!!')
 
         game.roll(4)
         game.useJokerCard()
 
-        expect(consoleSpy.content).to.contain('Ed use a Joker')
+        expect(consoleSpy.content).to.contain('Ed use a Joker\nAnswer was correct!!!!')
     });
 
     it('should a player not use a joker card twice per games', function () {
@@ -226,4 +226,22 @@ describe('The test environment', () => {
         assert.include(consoleSpy.content,"Pet's new location is 2");
         assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
     });
+
+    it("first player purse and place shouldn't being NaN", ()=>
+    {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player));
+
+        game.roll(2);
+        game.wasCorrectlyAnswered();
+
+        assert.notInclude(consoleSpy.content,"Pet's new location is NaN");
+        assert.notInclude(consoleSpy.content,"Pet now has NaN Gold Coins.");
+        assert.include(consoleSpy.content,"Pet's new location is 2");
+        assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
+
+    })
 });
