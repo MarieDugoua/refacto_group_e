@@ -22,7 +22,7 @@ describe('The Golden Master', () => {
         game = new Game(consoleSpy);
     });
 
-    describe("write master", () => {
+   /* describe("write master", () => {
         data.forEach(
             players => {
                 it("write with " + players.length + " player", () => {
@@ -31,7 +31,7 @@ describe('The Golden Master', () => {
                 });
             }
         );
-    });
+    });*/
 
 
     describe("read", () => {

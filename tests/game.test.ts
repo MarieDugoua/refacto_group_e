@@ -43,7 +43,7 @@ describe('The test environment', () => {
         expect(() => game.roll(5)).to.throw(Error)
     })
 
-    it('player should leave a game', () => {
+    it('first player should leave a game', () => {
         const consoleSpy = new ConsoleSpy();
         const game = new Game(consoleSpy);
         const players: string[] = ['Pet', 'Ed', 'Chat']
@@ -57,6 +57,9 @@ describe('The test environment', () => {
         assert.notInclude(game.getPlayers(), players[0])
         assert.include(game.getPlayers(), players[1])
         assert.include(game.getPlayers(), players[2])
+
+        // @ts-ignore
+        assert.isTrue(consoleSpy.content.includes("Pet leaves the game"))
     });
 
     it('second player should leave a game', () => {
@@ -74,6 +77,9 @@ describe('The test environment', () => {
         assert.include(game.getPlayers(), players[0])
         assert.notInclude(game.getPlayers(), players[1])
         assert.include(game.getPlayers(), players[2])
+
+        // @ts-ignore
+        assert.isTrue(consoleSpy.content.includes("Ed leaves the game"))
     });
 
     it('player should leave prison', () => {
@@ -103,6 +109,9 @@ describe('The test environment', () => {
 
         expect(game.getIsGettingOutOfPenaltyBox()).to.equals(true)
         expect(game.getInPenaltyBox()[0]).to.equals(false)
+
+        // @ts-ignore
+        assert.isTrue(consoleSpy.content.includes("Pet is getting out of the penalty box"))
     });
 
     it('should a player use a joker card', function () {

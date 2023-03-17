@@ -33,6 +33,7 @@
     "typescript": "^2.9.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.4",
     "@types/node": "^18.14.5",
     "chai": "^4.1.2",
     "mocha-each": "^2.0.1",
