@@ -1,6 +1,6 @@
 Billy was added
 They are player number 1
-ErrorBilly was added
+NotEnoughPlayerError: testBilly was added
 They are player number 2
 Villy was added
 They are player number 3
@@ -9,117 +9,117 @@ They have rolled a 1
 Billy's new location is NaN
 The category is Rock
 Rock Question 0
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 2
 Billy's new location is 2
 The category is Sports
 Sports Question 0
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 1 Gold Coins.
 Villy is the current player
 They have rolled a 4
 Villy's new location is 4
 The category is Pop
 Pop Question 0
-Answer was corrent!!!!
+Answer was correct!!!!
 Villy now has 1 Gold Coins.
 Billy is the current player
 They have rolled a 5
 Billy's new location is NaN
 The category is Rock
 Rock Question 1
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 6
 Billy's new location is 8
 The category is Pop
 Pop Question 1
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 2 Gold Coins.
 Villy is the current player
 They have rolled a 1
 Villy's new location is 5
 The category is Science
 Science Question 0
-Answer was corrent!!!!
+Answer was correct!!!!
 Villy now has 2 Gold Coins.
 Billy is the current player
 They have rolled a 2
 Billy's new location is NaN
 The category is Rock
 Rock Question 2
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 4
 Billy's new location is 0
 The category is Pop
 Pop Question 2
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 3 Gold Coins.
 Villy is the current player
 They have rolled a 5
 Villy's new location is 10
 The category is Sports
 Sports Question 1
-Answer was corrent!!!!
+Answer was correct!!!!
 Villy now has 3 Gold Coins.
 Billy is the current player
 They have rolled a 6
 Billy's new location is NaN
 The category is Rock
 Rock Question 3
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 1
 Billy's new location is 1
 The category is Science
 Science Question 1
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 4 Gold Coins.
 Villy is the current player
 They have rolled a 2
 Villy's new location is 0
 The category is Pop
 Pop Question 3
-Answer was corrent!!!!
+Answer was correct!!!!
 Villy now has 4 Gold Coins.
 Billy is the current player
 They have rolled a 4
 Billy's new location is NaN
 The category is Rock
 Rock Question 4
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 5
 Billy's new location is 6
 The category is Sports
 Sports Question 2
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 5 Gold Coins.
 Villy is the current player
 They have rolled a 6
 Villy's new location is 6
 The category is Sports
 Sports Question 3
-Answer was corrent!!!!
+Answer was correct!!!!
 Villy now has 5 Gold Coins.
 Billy is the current player
 They have rolled a 1
 Billy's new location is NaN
 The category is Rock
 Rock Question 5
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has NaN Gold Coins.
 Billy is the current player
 They have rolled a 2
 Billy's new location is 8
 The category is Pop
 Pop Question 4
-Answer was corrent!!!!
+Answer was correct!!!!
 Billy now has 6 Gold Coins.

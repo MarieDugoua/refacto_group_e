@@ -2,7 +2,6 @@ import { expect, assert } from 'chai';
 import { describe, it } from 'mocha';
 import { GameRunner } from '../src/game-runner';
 import { Game } from "../src/game";
-import {NotEnoughPlayerError} from "../src/errors/NotEnoughPlayerError";
 import {ConsoleSpy} from "../src/ConsoleSpy";
 import {TooManyPlayerError} from "../src/errors/TooManyPlayerError";
 
@@ -104,6 +103,76 @@ describe('The test environment', () => {
 
         expect(game.getIsGettingOutOfPenaltyBox()).to.equals(true)
         expect(game.getInPenaltyBox()[0]).to.equals(false)
+    });
+
+    it('should a player use a joker card', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(consoleSpy.content).to.contain('Pet use a Joker')
+        expect(consoleSpy.content).to.contain('Answer was correct!!!!')
+    });
+
+    it('should give no gold when player use joker card', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+        const purses = game.purses
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(game.purses[0]).to.be.NaN
+        expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
+    });
+
+    it('2 different players should be able to use a joker card', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(consoleSpy.content).to.contain('Pet use a Joker')
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(consoleSpy.content).to.contain('Ed use a Joker')
+    });
+
+    it('should a player not use a joker card twice per games', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(consoleSpy.content).to.contain('Answer was correct!!!!')
+
+        game.roll(4)
+        game.wasCorrectlyAnswered()
+        game.roll(4)
+        game.wasCorrectlyAnswered()
+
+        game.roll(4)
+        game.useJokerCard()
+
+        expect(consoleSpy.content).to.contain("Can't use a Joker twice")
     });
 
     it('if techno mode is activated should ask techno questions', () => {
