@@ -130,7 +130,7 @@ describe('The test environment', () => {
         game.roll(4)
         game.useJokerCard()
 
-        expect(game.purses[0]).to.be.NaN
+        expect(game.purses[0]).to.be.equals(0);
         expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
     });
 

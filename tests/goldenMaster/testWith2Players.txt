@@ -113,13 +113,6 @@ Billy is the current player
 They have rolled a 1
 Billy's new location is 7
 The category is Rock
-Rock Question 5
-Answer was correct!!!!
-Billy now has NaN Gold Coins.
-Billy is the current player
-They have rolled a 2
-Billy's new location is 8
-The category is Pop
-Pop Question 4
+Rock Question 0
 Answer was correct!!!!
 Billy now has 6 Gold Coins.
