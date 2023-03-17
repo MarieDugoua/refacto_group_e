@@ -256,7 +256,7 @@ describe('The test environment', () => {
 
         while (index < 1000) {
             game.askQuestion()
-            expect(consoleSpy.content).to.not.contains(undefined)
+            expect(consoleSpy.content).to.not.contains("undefined")
             expect(consoleSpy.content).to.not.equals(consoleSpyContent)
 
             consoleSpyContent = consoleSpy.content
