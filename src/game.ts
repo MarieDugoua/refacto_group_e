@@ -224,7 +224,7 @@ export class Game {
             this.iConsole.log(`${this.players[this.currentPlayer]} use a Joker`)
 
             this.playersJokerCard[this.currentPlayer] = true
-            this.wasCorrectlyAnswered()
+            this.wasCorrectlyAnswered(true)
         } else {
             this.iConsole.log("Can't use a Joker twice")
         }
