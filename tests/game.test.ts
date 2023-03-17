@@ -241,7 +241,6 @@ describe('The test environment', () => {
         do {
             try {
                 game.roll(Math.floor(Math.random() * 6) + 1);
-                console.log(consoleSpy.content);
                 notAWinner = game.wasCorrectlyAnswered();
             } catch (e) {
                 console.log(e)
@@ -265,7 +264,6 @@ describe('The test environment', () => {
         do {
             try {
                 game.roll(Math.floor(Math.random() * 6) + 1);
-                console.log(consoleSpy.content);
                 notAWinner = game.wasCorrectlyAnswered();
             } catch (e) {
                 console.log(e)
