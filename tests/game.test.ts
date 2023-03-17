@@ -130,7 +130,7 @@ describe('The test environment', () => {
         game.roll(4)
         game.useJokerCard()
 
-        expect(game.purses[0]).to.be.NaN
+        expect(game.purses[0]).to.be.equals(0);
         expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
     });
 
@@ -200,5 +200,21 @@ describe('The test environment', () => {
         game.wasCorrectlyAnswered()
 
         expect(consoleSpy.content).to.include("Rock");
+    });
+
+    it('question distribution should be fair', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(2);
+        game.wasCorrectlyAnswered();
+
+        assert.notInclude(consoleSpy.content,"Pet's new location is NaN");
+        assert.notInclude(consoleSpy.content,"Pet now has NaN Gold Coins.");
+        assert.include(consoleSpy.content,"Pet's new location is 2");
+        assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
     });
 });

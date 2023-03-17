@@ -39,10 +39,10 @@ export class Game {
     }
 
     public add(name: string): boolean {
-        this.players.push(name);
         this.places[this.howManyPlayers()] = 0;
         this.purses[this.howManyPlayers()] = 0;
         this.inPenaltyBox[this.howManyPlayers()] = false;
+        this.players.push(name);
 
         this.iConsole.log(name + " was added");
         this.iConsole.log("They are player number " + this.players.length);
@@ -224,7 +224,7 @@ export class Game {
             this.iConsole.log(`${this.players[this.currentPlayer]} use a Joker`)
 
             this.playersJokerCard[this.currentPlayer] = true
-            this.wasCorrectlyAnswered()
+            this.wasCorrectlyAnswered(true)
         } else {
             this.iConsole.log("Can't use a Joker twice")
         }
