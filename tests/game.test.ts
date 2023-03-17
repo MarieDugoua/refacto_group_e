@@ -139,6 +139,7 @@ describe('The test environment', () => {
         game.useJokerCard()
 
         expect(game.purses[0]).to.be.equals(0);
+        expect(consoleSpy.content).to.contain('Pet use a Joker\nAnswer was correct!!!!')
         expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
     });
 
