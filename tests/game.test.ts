@@ -244,4 +244,24 @@ describe('The test environment', () => {
         assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
 
     })
+
+    it('should have a infinite deck', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+        let index = 0;
+
+        players.forEach((player) => game.add(player))
+        let consoleSpyContent = consoleSpy.content
+
+        while (index < 1000) {
+            game.askQuestion()
+            expect(consoleSpy.content).to.not.contains("undefined")
+            expect(consoleSpy.content).to.not.equals(consoleSpyContent)
+
+            consoleSpyContent = consoleSpy.content
+
+            index++
+        }
+    });
 });
