@@ -201,4 +201,20 @@ describe('The test environment', () => {
 
         expect(consoleSpy.content).to.include("Rock");
     });
+
+    it('question distribution should be fair', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+
+        game.roll(2);
+        game.wasCorrectlyAnswered();
+
+        assert.notInclude(consoleSpy.content,"Pet's new location is NaN");
+        assert.notInclude(consoleSpy.content,"Pet now has NaN Gold Coins.");
+        assert.include(consoleSpy.content,"Pet's new location is 2");
+        assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
+    });
 });
