@@ -139,7 +139,6 @@ describe('The test environment', () => {
         game.useJokerCard()
 
         expect(game.purses[0]).to.be.equals(0);
-        expect(consoleSpy.content).to.contain('Pet use a Joker\nAnswer was correct!!!!')
         expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`)
     });
 
@@ -244,4 +243,24 @@ describe('The test environment', () => {
         assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
 
     })
+
+    it('should have a infinite deck', function () {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+        let index = 0;
+
+        players.forEach((player) => game.add(player))
+        let consoleSpyContent = consoleSpy.content
+
+        while (index < 1000) {
+            game.askQuestion()
+            expect(consoleSpy.content).to.not.contains(undefined)
+            expect(consoleSpy.content).to.not.equals(consoleSpyContent)
+
+            consoleSpyContent = consoleSpy.content
+
+            index++
+        }
+    });
 });

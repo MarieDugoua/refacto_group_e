@@ -98,17 +98,22 @@ export class Game {
             throw new TooManyPlayerError();
     }
 
-    private askQuestion(): void {
+    public askQuestion(): void {
         if (this.currentCategory() == 'Pop')
             this.iConsole.log(this.popQuestions.shift());
+            this.popQuestions.push(`Pop Question: `)
         if (this.currentCategory() == 'Science')
             this.iConsole.log(this.scienceQuestions.shift());
+            this.scienceQuestions.push(`Science Question: `)
         if (this.currentCategory() == 'Sports')
             this.iConsole.log(this.sportsQuestions.shift());
+            this.sportsQuestions.push(`Sports Question: `)
         if (this.currentCategory() == 'Rock')
             this.iConsole.log(this.rockQuestions.shift());
+            this.rockQuestions.push(`Rock Question: `)
         if(this.currentCategory() == 'Techno')
             this.iConsole.log(this.technoQuestions.shift());
+            this.technoQuestions.push(`Techno Question: `)
     }
 
     private currentCategory(): string {
