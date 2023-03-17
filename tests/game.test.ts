@@ -195,6 +195,7 @@ describe('The test environment', () => {
         game.roll(3)
         game.wasCorrectlyAnswered()
 
+        expect(consoleSpy.content).to.not.include("Rock");
         expect(consoleSpy.content).to.include("Techno");
     });
 
@@ -208,6 +209,7 @@ describe('The test environment', () => {
         game.roll(3)
         game.wasCorrectlyAnswered()
 
+        expect(consoleSpy.content).to.not.include("Techno");
         expect(consoleSpy.content).to.include("Rock");
     });
 
@@ -225,5 +227,53 @@ describe('The test environment', () => {
         assert.notInclude(consoleSpy.content,"Pet now has NaN Gold Coins.");
         assert.include(consoleSpy.content,"Pet's new location is 2");
         assert.include(consoleSpy.content,"Pet now has 1 Gold Coins.");
+    });
+
+    it('game should run until player reach gold required to win', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+        game.setGoldRequiredToWin(8)
+
+        let notAWinner;
+        do {
+            try {
+                game.roll(Math.floor(Math.random() * 6) + 1);
+                console.log(consoleSpy.content);
+                notAWinner = game.wasCorrectlyAnswered();
+            } catch (e) {
+                console.log(e)
+            }
+
+        } while (notAWinner);
+
+        expect(consoleSpy.content).include("8 Gold Coins");
+        expect(consoleSpy.content).not.include("9 Gold Coins");
+    });
+
+    it('game should last until player reaches 6 gold if gold is set lower than 6', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+        game.setGoldRequiredToWin(2)
+
+        let notAWinner;
+        do {
+            try {
+                game.roll(Math.floor(Math.random() * 6) + 1);
+                console.log(consoleSpy.content);
+                notAWinner = game.wasCorrectlyAnswered();
+            } catch (e) {
+                console.log(e)
+            }
+
+        } while (notAWinner);
+
+        expect(consoleSpy.content).include("6 Gold Coins");
+        expect(consoleSpy.content).not.include("7 Gold Coins");
     });
 });

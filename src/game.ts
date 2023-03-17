@@ -19,6 +19,7 @@ export class Game {
     private rockQuestions: Array<string> = [];
     private playersJokerCard: Array<boolean> = [];
     private technoQuestions: Array<string> = [];
+    private goldRequiredToWin: number = 6;
 
     private iConsole : IConsole;
     constructor(iConsole:IConsole) {
@@ -136,7 +137,15 @@ export class Game {
     }
 
     private didPlayerWin(): boolean {
-        return !(this.purses[this.currentPlayer] == 6)
+        return !(this.purses[this.currentPlayer] == this.goldRequiredToWin)
+    }
+
+    public setGoldRequiredToWin(gold) {
+        if(gold >= 6) {
+            this.goldRequiredToWin = gold;
+        } else {
+            this.goldRequiredToWin = 6;
+        }
     }
 
     public wrongAnswer(): boolean {
