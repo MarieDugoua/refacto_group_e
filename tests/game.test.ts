@@ -217,6 +217,11 @@ describe('The test environment', () => {
         const consoleSpy = new ConsoleSpy();
         const game = new Game(consoleSpy);
 
+        const players: string[] = ['Pet', 'Ed', 'Chat']
+
+        players.forEach((player) => game.add(player))
+        const purses = game.purses
+
         game.roll(roll);
 
         const correctAnswers = [
@@ -230,11 +235,10 @@ describe('The test environment', () => {
             game.roll(roll);
         });
 
-        // Act
         game.wasCorrectlyAnswered();
 
-        // Assert
-        expect(game.purse).toBe(3);
+        expect(game.purses[0]).to.be.equals(3);
+        expect(consoleSpy.content).to.not.contain(`Pet now has ${purses[0]}  Gold Coins.`);
     });
 
     it('question distribution should be fair', () => {
