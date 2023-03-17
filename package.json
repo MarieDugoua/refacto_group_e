@@ -30,6 +30,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "mocha": "^10.2.0",
+    "string.prototype.matchall": "^4.0.8",
     "typescript": "^2.9.2"
   },
   "devDependencies": {

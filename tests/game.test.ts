@@ -5,6 +5,7 @@ import { Game } from "../src/game";
 import {NotEnoughPlayerError} from "../src/errors/NotEnoughPlayerError";
 import {ConsoleSpy} from "../src/ConsoleSpy";
 import {TooManyPlayerError} from "../src/errors/TooManyPlayerError";
+const matchAll = require('string.prototype.matchall');
 
 describe('The test environment', () => {
 
@@ -104,5 +105,41 @@ describe('The test environment', () => {
 
         expect(game.getIsGettingOutOfPenaltyBox()).to.equals(true)
         expect(game.getInPenaltyBox()[0]).to.equals(false)
+    });
+
+    it('question distribution should be fair', () => {
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+        const players: string[] = ['Pet', 'Ed']
+
+        players.forEach((player) => game.add(player))
+
+        //Pop, Science, Sports, Rock, Techno
+        let petCategoriesQuestion: Array<number> = [0, 0, 0, 0, 0];
+        let edCategoriesQuestion: Array<number> = [0, 0, 0, 0, 0];
+
+        const categoryPatterns = [
+            new RegExp("^The category is Pop\\nRock Question [0-9]+$"),
+            new RegExp("^The category is Science\\nRock Question [0-9]+$"),
+            new RegExp("^The category is Sports\\nRock Question [0-9]+$"),
+            new RegExp("^The category is Rock\\nRock Question [0-9]+$"),
+            new RegExp("^The category is Techno\\nTechno Question [0-9]+$"),
+        ];
+
+        const categoryIndices = [0, 1, 2, 3, 4]
+
+        for (let i = 0; i < 100; i++) {
+            game.roll(1);
+            game.wasCorrectlyAnswered();
+        }
+
+        const matches = matchAll(consoleSpy.content, categoryPatterns);
+        for (const match of matches) {
+            const categoryIndex = categoryIndices[match.index - 1];
+            petCategoriesQuestion[categoryIndex]++;
+            edCategoriesQuestion[categoryIndex]++;
+        }
+
+        expect(petCategoriesQuestion).to.deep.equal(edCategoriesQuestion);
     });
 });
