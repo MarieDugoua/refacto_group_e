@@ -1,20 +1,24 @@
 import {IConsole} from "./IConsole";
 import {TooManyPlayerError} from "./errors/TooManyPlayerError";
 import {NotEnoughPlayerError} from "./errors/NotEnoughPlayerError";
+import {ConsoleSpy} from "./ConsoleSpy";
 
 export class Game {
 
     private players: Array<string> = [];
     private places: Array<number> = [];
-    private purses: Array<number> = [];
+    public purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
     private currentPlayer: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
+    private isTechnoModeActivated: boolean = false;
 
     private popQuestions: Array<string> = [];
     private scienceQuestions: Array<string> = [];
     private sportsQuestions: Array<string> = [];
     private rockQuestions: Array<string> = [];
+    private playersJokerCard: Array<boolean> = [];
+    private technoQuestions: Array<string> = [];
 
     private iConsole : IConsole;
     constructor(iConsole:IConsole) {
@@ -25,6 +29,7 @@ export class Game {
             this.popQuestions.push("Pop Question " + i);
             this.scienceQuestions.push("Science Question " + i);
             this.sportsQuestions.push("Sports Question " + i);
+            this.technoQuestions.push("Techno Question " + i);
             this.rockQuestions.push(this.createRockQuestion(i));
           }
     }
@@ -34,10 +39,10 @@ export class Game {
     }
 
     public add(name: string): boolean {
-        this.players.push(name);
         this.places[this.howManyPlayers()] = 0;
         this.purses[this.howManyPlayers()] = 0;
         this.inPenaltyBox[this.howManyPlayers()] = false;
+        this.players.push(name);
 
         this.iConsole.log(name + " was added");
         this.iConsole.log("They are player number " + this.players.length);
@@ -102,6 +107,8 @@ export class Game {
             this.iConsole.log(this.sportsQuestions.shift());
         if (this.currentCategory() == 'Rock')
             this.iConsole.log(this.rockQuestions.shift());
+        if(this.currentCategory() == 'Techno')
+            this.iConsole.log(this.technoQuestions.shift());
     }
 
     private currentCategory(): string {
@@ -123,6 +130,8 @@ export class Game {
             return 'Sports';
         if (this.places[this.currentPlayer] == 10)
             return 'Sports';
+        if (this.isTechnoModeActivated)
+            return 'Techno';
         return 'Rock';
     }
 
@@ -141,14 +150,17 @@ export class Game {
         return true;
     }
 
-    public wasCorrectlyAnswered(): boolean {
+    public wasCorrectlyAnswered(withJokerCard: boolean = false): boolean {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
               this.iConsole.log('Answer was correct!!!!');
-              this.purses[this.currentPlayer] += 1;
-              this.iConsole.log(this.players[this.currentPlayer] + " now has " +
-              this.purses[this.currentPlayer] + " Gold Coins.");
-      
+
+              if (!withJokerCard) {
+                  this.purses[this.currentPlayer] += 1;
+                  this.iConsole.log(this.players[this.currentPlayer] + " now has " +
+                  this.purses[this.currentPlayer] + " Gold Coins.");
+              }
+
               var winner = this.didPlayerWin();
               this.currentPlayer += 1;
               if (this.currentPlayer == this.players.length)
@@ -165,11 +177,13 @@ export class Game {
       
           } else {
       
-            this.iConsole.log("Answer was corrent!!!!");
-      
-            this.purses[this.currentPlayer] += 1;
-            this.iConsole.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
+            this.iConsole.log("Answer was correct!!!!");
+
+            if (!withJokerCard) {
+                this.purses[this.currentPlayer] += 1;
+                this.iConsole.log(this.players[this.currentPlayer] + " now has " +
+                    this.purses[this.currentPlayer] + " Gold Coins.");
+            }
       
             var winner = this.didPlayerWin();
       
@@ -186,6 +200,10 @@ export class Game {
         this.players.splice(this.currentPlayer, 1)
     }
 
+    public activateTechnoQuestions(): void {
+        this.isTechnoModeActivated = true;
+    }
+
     public getPlayers(): string[]
     {
         return this.players
@@ -199,5 +217,16 @@ export class Game {
     public getIsGettingOutOfPenaltyBox(): boolean
     {
         return this.isGettingOutOfPenaltyBox
+    }
+
+    useJokerCard() {
+        if (!this.playersJokerCard[this.currentPlayer]) {
+            this.iConsole.log(`${this.players[this.currentPlayer]} use a Joker`)
+
+            this.playersJokerCard[this.currentPlayer] = true
+            this.wasCorrectlyAnswered(true)
+        } else {
+            this.iConsole.log("Can't use a Joker twice")
+        }
     }
 }

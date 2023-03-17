@@ -1,0 +1,3 @@
+Billy was added
+They are player number 1
+NotEnoughPlayerError: test
