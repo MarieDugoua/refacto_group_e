@@ -132,4 +132,31 @@ describe('The test environment', () => {
 
         expect(consoleSpy.content).to.include("Rock");
     });
+
+    it("should earn 3 Gold Points", () => {
+        // Arrange
+        const roll = 2;
+        const consoleSpy = new ConsoleSpy();
+        const game = new Game(consoleSpy);
+
+        game.roll(roll);
+
+        const correctAnswers = [
+            { category: "Pop", answer: "Pop Answer 1" },
+            { category: "Pop", answer: "Pop Answer 2" },
+            { category: "Pop", answer: "Pop Answer 3" },
+        ];
+
+        correctAnswers.forEach((answer) => {
+            game.wasCorrectlyAnswered();
+            game.roll(roll);
+        });
+
+        // Act
+        game.wasCorrectlyAnswered();
+
+        // Assert
+        expect(game.purse).toBe(3);
+    });
+
 });
