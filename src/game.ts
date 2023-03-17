@@ -1,12 +1,13 @@
 import {NotEnoughPlayerError} from "./errors/NotEnoughPlayerError";
 import {IConsole} from "./IConsole";
 import {TooManyPlayerError} from "./errors/TooManyPlayerError";
+import {ConsoleSpy} from "./ConsoleSpy";
 
 export class Game {
 
     private players: Array<string> = [];
     private places: Array<number> = [];
-    private purses: Array<number> = [];
+    public purses: Array<number> = [];
     private inPenaltyBox: Array<boolean> = [];
     private currentPlayer: number = 0;
     private isGettingOutOfPenaltyBox: boolean = false;
@@ -16,6 +17,7 @@ export class Game {
     private scienceQuestions: Array<string> = [];
     private sportsQuestions: Array<string> = [];
     private rockQuestions: Array<string> = [];
+    private playersJokerCard: Array<boolean> = [];
     private technoQuestions: Array<string> = [];
 
     private iConsole : IConsole;
@@ -148,14 +150,17 @@ export class Game {
         return true;
     }
 
-    public wasCorrectlyAnswered(): boolean {
+    public wasCorrectlyAnswered(withJokerCard: boolean = false): boolean {
         if (this.inPenaltyBox[this.currentPlayer]) {
             if (this.isGettingOutOfPenaltyBox) {
               this.iConsole.log('Answer was correct!!!!');
-              this.purses[this.currentPlayer] += 1;
-              this.iConsole.log(this.players[this.currentPlayer] + " now has " +
-              this.purses[this.currentPlayer] + " Gold Coins.");
-      
+
+              if (!withJokerCard) {
+                  this.purses[this.currentPlayer] += 1;
+                  this.iConsole.log(this.players[this.currentPlayer] + " now has " +
+                  this.purses[this.currentPlayer] + " Gold Coins.");
+              }
+
               var winner = this.didPlayerWin();
               this.currentPlayer += 1;
               if (this.currentPlayer == this.players.length)
@@ -172,11 +177,13 @@ export class Game {
       
           } else {
       
-            this.iConsole.log("Answer was corrent!!!!");
-      
-            this.purses[this.currentPlayer] += 1;
-            this.iConsole.log(this.players[this.currentPlayer] + " now has " +
-                this.purses[this.currentPlayer] + " Gold Coins.");
+            this.iConsole.log("Answer was correct!!!!");
+
+            if (!withJokerCard) {
+                this.purses[this.currentPlayer] += 1;
+                this.iConsole.log(this.players[this.currentPlayer] + " now has " +
+                    this.purses[this.currentPlayer] + " Gold Coins.");
+            }
       
             var winner = this.didPlayerWin();
       
@@ -210,5 +217,16 @@ export class Game {
     public getIsGettingOutOfPenaltyBox(): boolean
     {
         return this.isGettingOutOfPenaltyBox
+    }
+
+    useJokerCard() {
+        if (!this.playersJokerCard[this.currentPlayer]) {
+            this.iConsole.log(`${this.players[this.currentPlayer]} use a Joker`)
+
+            this.playersJokerCard[this.currentPlayer] = true
+            this.wasCorrectlyAnswered()
+        } else {
+            this.iConsole.log("Can't use a Joker twice")
+        }
     }
 }
